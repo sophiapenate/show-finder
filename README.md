@@ -1,13 +1,13 @@
-# Show Finder
+# Dinner Party Planner
 
 ## User Story
-AS AN avid concert-goer<br>
-I WANT to find concerts near me<br>
-SO THAT I can discover new music at live shows.
+AS A dinner party host<br>
+I WANT to find dinner and cocktail recipies<br>
+SO THAT I have a shopping list for my dinner party.
 
 ## APIs
-* [TasteDive](https://tastedive.com/read/api)
-* [Ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/)
+* [Spoonacular](https://spoonacular.com/food-api)
+* [TheCocktailDB](https://www.thecocktaildb.com/api.php)
 
 ## CSS Framework
 * [Foundation](https://get.foundation/sites/docs/)
