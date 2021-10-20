@@ -2,7 +2,7 @@
 
 ## User Story
 AS A dinner party host<br>
-I WANT to find dinner and cocktail recipies<br>
+I WANT to find dinner and cocktail recipes<br>
 SO THAT I have a shopping list for my dinner party.
 
 ## APIs
