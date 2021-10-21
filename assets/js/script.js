@@ -26,15 +26,17 @@ var getArtistID = function(searchedTerm) {
     })
 }
 
-function getSimilarArtists() {
+function getSimilarArtists(searchedTerm) {
 	var cors_preface = 'https://uofa21cors.herokuapp.com/';
-	var apiURL = "https://tastedive.com/api/similar?q=gorillaz&k=425855-ShowFind-GMZOGDQD"
+	var apiURL = "https://tastedive.com/api/similar?q=" + searchedTerm + "&k=425855-ShowFind-GMZOGDQD"
 	fetch(cors_preface + apiURL)
 	.then(function(response) {
 		return response.json();
 	})
 	.then(function(data) {
 		console.log(data);
+        var similarArtistsArr = [];
+        // write loop to push artist names into similarArtistsArr
 	})
 	.catch(function(err) {
 		console.error(err);
