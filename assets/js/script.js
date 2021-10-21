@@ -1,25 +1,29 @@
-var getShows = function(artistID) {
-    var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?attractionId=" + artistID + "&size=1&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
+function getShows(searchedArtist, searchedCity) {
+    var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + searchedArtist + "&city=" + searchedCity +"&size=1&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
     fetch(apiURL).then(function(response) {
         return response.json();
     })
     .then(function(data) {
-        console.log(data._embedded.events);
+        if (data._embedded) {
+            console.log(data._embedded);
+        } else {
+            console.log("No shows found.");
+        }
     })
     .catch(function(err) {
         console.error(err);
     })
 }
 
-var getArtistID = function(searchedTerm) {
-    var apiURL = "https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=" + searchedTerm + "&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
+function getArtistID(searchedArtist) {
+    var apiURL = "https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=" + searchedArtist + "&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
     fetch(apiURL).then(function(response) {
         return response.json();
     })
     .then(function(data) {
-        console.log(data);
         var artistID = data._embedded.attractions[0].id;
-        getShows(artistID);
+        console.log(artistID);
+        return artistID;
     })
     .catch(function(err) {
         console.error(err);
@@ -43,8 +47,10 @@ function getSimilarArtists(searchedTerm) {
 	});
 }
 
-var searchedTerm = "Red Hot Chili Peppers";
+function searchFormHandler() {
+    var searchedArtist = "Red Hot Chili Peppers";
+    var searchedLocation = "Dublin";
+    getShows(searchedArtist, searchedLocation);
+}
 
-getArtistID(searchedTerm)
-
-getSimilarArtists(searchedTerm);
+searchFormHandler();
