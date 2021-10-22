@@ -1,5 +1,4 @@
 function displayShow(showObj) {
-    console.log(showObj);
     //for (var i = 0; i < showsArr.length; i++) {
         // create concertInfoEl
         var concertInfoEl = document.createElement("div");
@@ -39,45 +38,55 @@ function displayShow(showObj) {
 }
 
 function getShows(similarArtistsArr, searchedCity) {
-    // setup fetch function to pull data from Ticketmaster API
-    function fetchShows(artist, city) {
-        var cors_preface = 'https://uofa21cors.herokuapp.com/';
-        var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + artist + "&city=" + city + "&size=1&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
-        fetch(cors_preface + apiURL)
-            .then(function (response) {
-                response.json()
-                    .then(function (data) {
-                        if (data._embedded) {
-                            var fetchedEvents = data._embedded.events;
-                            for (var i = 0; i < fetchedEvents.length; i++) {
-                                // create object for each show
-                                var showObj = {};
-                                    showObj.name = fetchedEvents[i].name;
-                                    showObj.startDate = fetchedEvents[i].dates.start.localDate;
-                                    // set endDate only if it exists
-                                    if (fetchedEvents[i].dates.end) {
-                                        showObj.endDate = fetchedEvents[i].dates.end.localDate;
-                                    }
-                                    showObj.city = fetchedEvents[i]._embedded.venues[0].city.name,
-                                    showObj.venue = fetchedEvents[i]._embedded.venues[0].name,
-                                    showObj.getTixURL = fetchedEvents[i].url;
-                                // display object to DOM
-                                displayShow(showObj);
-                            }
-                        } else {
-                            console.log("No shows found.");
-                        }
-                    })
-            })
-            .catch(function (err) {
-                console.log(err);
-            })
+    // set counter to call fetch one at a time
+    i = 0;
+
+    // setup function to fetch event data
+    function fetchEventData() {
+        // set timeout to avoid quota limit violation
+        setTimeout(function() {
+            var cors_preface = 'https://uofa21cors.herokuapp.com/';
+            var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + similarArtistsArr[i] + "&city=" + searchedCity + "&size=1&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
+            fetch(cors_preface + apiURL)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (data._embedded) {
+                        var fetchedEvents = data._embedded.events;
+                        for (var i = 0; i < fetchedEvents.length; i++) {
+                            // create object for each show
+                            var showObj = {};
+                                showObj.name = fetchedEvents[i].name;
+                                showObj.startDate = fetchedEvents[i].dates.start.localDate;
+                                // set endDate only if it exists
+                                if (fetchedEvents[i].dates.end) {
+                                    showObj.endDate = fetchedEvents[i].dates.end.localDate;
+                                }
+                                showObj.city = fetchedEvents[i]._embedded.venues[0].city.name,
+                                showObj.venue = fetchedEvents[i]._embedded.venues[0].name,
+                                showObj.getTixURL = fetchedEvents[i].url;
+                            // display object to DOM
+                            displayShow(showObj);
+                                }
+                    }
+                })
+                .then(function() {
+                    // increase counter
+                    i++;
+                    // if more events, fetch
+                    if (i < similarArtistsArr.length) {
+                        fetchEventData();
+                    }
+                })
+                .catch(function (err) {
+                    console.log(err);
+                })
+        }, 200);
     }
 
-    // loop through each artist in similarArtistsArr and fetch shows for each
-    for (var i = 0; i < similarArtistsArr.length; i++) {
-        fetchShows(similarArtistsArr[i], searchedCity);
-    }
+    // call initial fetch
+    fetchEventData();
 }
 
 function getSimilarArtists(searchedTerm) {
