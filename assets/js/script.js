@@ -11,7 +11,7 @@ function getShows(searchedArtist, searchedCity) {
         }
     })
     .catch(function(err) {
-        console.error(err);
+        console.error("ERROR: " + err);
     })
 }
 
@@ -24,6 +24,7 @@ function getArtistID(searchedArtist) {
         var artistID = data._embedded.attractions[0].id;
         console.log(artistID);
         return artistID;
+    // set timeout to avoid quota policy violation
     })
     .catch(function(err) {
         console.error(err);
@@ -49,8 +50,23 @@ function getSimilarArtists(searchedTerm) {
 
 function searchFormHandler() {
     var searchedArtist = "Red Hot Chili Peppers";
-    var searchedLocation = "Dublin";
-    getShows(searchedArtist, searchedLocation);
+    var similarArtistsArr = [
+        "Red Hot Chili Peppers",
+        "Gorillaz",
+        "Nirvana",
+        "Foo Fighters",
+        "Rage Against the Machine",
+        "The White Stripes",
+        "Incubus"
+    ]
+    var searchedLocation = "London";
+    
+    for (var i = 0; i < similarArtistsArr.length; i++) {
+        // set timeout to avoid 5 requests per second quota policy violation
+        setTimeout(function() {
+            getShows(similarArtistsArr[i], searchedLocation);
+        }, 200);
+    }
 }
 
 searchFormHandler();
