@@ -1,6 +1,8 @@
 function getShows(searchedArtist, searchedCity) {
+    var cors_preface = 'https://uofa21cors.herokuapp.com/';
     var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + searchedArtist + "&city=" + searchedCity +"&size=1&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
-    fetch(apiURL).then(function(response) {
+    fetch(cors_preface + apiURL)
+    .then(function(response) {
         return response.json();
     })
     .then(function(data) {
@@ -12,22 +14,6 @@ function getShows(searchedArtist, searchedCity) {
     })
     .catch(function(err) {
         console.error("ERROR: " + err);
-    })
-}
-
-function getArtistID(searchedArtist) {
-    var apiURL = "https://app.ticketmaster.com/discovery/v2/attractions.json?keyword=" + searchedArtist + "&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
-    fetch(apiURL).then(function(response) {
-        return response.json();
-    })
-    .then(function(data) {
-        var artistID = data._embedded.attractions[0].id;
-        console.log(artistID);
-        return artistID;
-    // set timeout to avoid quota policy violation
-    })
-    .catch(function(err) {
-        console.error(err);
     })
 }
 
@@ -58,14 +44,16 @@ function searchFormHandler() {
         "Rage Against the Machine",
         "The White Stripes",
         "Incubus"
-    ]
+    ];
     var searchedLocation = "London";
     
     for (var i = 0; i < similarArtistsArr.length; i++) {
         // set timeout to avoid 5 requests per second quota policy violation
-        setTimeout(function() {
+        //setTimeout(function() {
+            console.log(similarArtistsArr);
+            console.log(similarArtistsArr[i], searchedLocation);
             getShows(similarArtistsArr[i], searchedLocation);
-        }, 200);
+        //}, 200);
     }
 }
 
