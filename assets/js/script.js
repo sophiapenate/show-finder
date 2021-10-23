@@ -109,20 +109,26 @@ function getShows(similarArtistsArr, searchedCity) {
 }
 
 function getSimilarArtists(searchedTerm) {
-    var cors_preface = 'https://uofa21cors.herokuapp.com/';
-    var apiURL = "https://tastedive.com/api/similar?q=" + searchedTerm + "&k=425855-ShowFind-GMZOGDQD"
-    fetch(cors_preface + apiURL)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data);
-            var similarArtistsArr = [];
-            // write loop to push artist names into similarArtistsArr
-        })
-        .catch(function (err) {
-            console.error(err);
-        });
+
+	var cors_preface = 'https://uofa21cors.herokuapp.com/';
+	var apiURL = "https://tastedive.com/api/similar?q=" + searchedTerm + "&k=425855-ShowFind-GMZOGDQD"
+	fetch(cors_preface + apiURL)
+	.then(function(response) {
+		return response.json();
+	})
+	.then(function(data) {
+        var similarArtistsArr = [];
+        for (let i = 0; i < data.Similar.Results.length; i++) {
+        similarArtistsArr.push(data.Similar.Results[i].Name);
+    }
+
+    
+        // write loop to push artist names into similarArtistsArr
+	})
+	.catch(function(err) {
+		console.error(err);
+	});
+
 }
 
 function searchFormHandler() {
