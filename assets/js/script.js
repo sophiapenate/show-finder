@@ -37,8 +37,8 @@ function getSimilarArtists(searchedTerm) {
 		console.log(data);
         var similarArtistsArr = [];
         for (let i = 0; i < data.length; i++) {
-        ourArray.push(i);
-        console.log(similarArtistsArr[i]) 
+        similarArtistsArr.push(i);
+        console.log(similarArtistsArr) 
     }
         
         // write loop to push artist names into similarArtistsArr
