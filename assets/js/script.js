@@ -60,6 +60,7 @@ function getShows(similarArtistsArr, searchedCity) {
             var artistName = similarArtistsArr[i];
             var cors_preface = 'https://uofa21cors.herokuapp.com/';
             var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + artistName + "&city=" + searchedCity + "&size=1&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
+            //var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + artistName + "&city=" + searchedCity + "&size=1";
             fetch(cors_preface + apiURL)
                 .then(function (response) {
                     return response.json();
@@ -99,7 +100,7 @@ function getShows(similarArtistsArr, searchedCity) {
                     }
                 })
                 .catch(function (err) {
-                    console.log(err);
+                    console.log("Whoops. Something went wrong.", err);
                 })
         }, 200);
     }
@@ -109,7 +110,6 @@ function getShows(similarArtistsArr, searchedCity) {
 }
 
 function getSimilarArtists(searchedTerm) {
-
 	var cors_preface = 'https://uofa21cors.herokuapp.com/';
 	var apiURL = "https://tastedive.com/api/similar?q=" + searchedTerm + "&k=425855-ShowFind-GMZOGDQD"
 	fetch(cors_preface + apiURL)
@@ -119,16 +119,12 @@ function getSimilarArtists(searchedTerm) {
 	.then(function(data) {
         var similarArtistsArr = [];
         for (let i = 0; i < data.Similar.Results.length; i++) {
-        similarArtistsArr.push(data.Similar.Results[i].Name);
-    }
-
-    
-        // write loop to push artist names into similarArtistsArr
+            similarArtistsArr.push(data.Similar.Results[i].Name);
+        }
 	})
 	.catch(function(err) {
 		console.error(err);
 	});
-
 }
 
 function searchFormHandler() {
