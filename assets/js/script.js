@@ -68,10 +68,10 @@ function getShows(similarArtistsArr, searchedCity) {
                             var showObj = {};
                                 showObj.artistName = artistName;
                                 showObj.eventName = fetchedEvents[i].name;
-                                showObj.startDate = fetchedEvents[i].dates.start.localDate;
+                                showObj.startDate = moment(fetchedEvents[i].dates.start.localDate).format("ddd, MMM D, YYYY");
                                 // set endDate only if it exists
                                 if (fetchedEvents[i].dates.end) {
-                                    showObj.endDate = fetchedEvents[i].dates.end.localDate;
+                                    showObj.endDate = moment(fetchedEvents[i].dates.end.localDate).format("ddd, MMM D, YYYY");
                                 }
                                 showObj.city = fetchedEvents[i]._embedded.venues[0].city.name,
                                 showObj.venue = fetchedEvents[i]._embedded.venues[0].name,
