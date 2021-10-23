@@ -1,3 +1,4 @@
+var searchHistoryEl = document.createElement("div");
 var searchHistoryArr = [];
 
 function displayShow(showObj) {
@@ -130,6 +131,9 @@ function getSimilarArtists(searchedTerm) {
 }
 
 function displaySearchHistory() {
+    // reset searchHistoryEl
+    searchHistoryEl.textContent = "";
+
     // pull search history from local storage
     searchHistoryArr = JSON.parse(localStorage.getItem("searchHistory"));
     // if no search history exists in local storage
@@ -141,7 +145,13 @@ function displaySearchHistory() {
     }
 
     // loop through searchHistoryArr and create buttons for each item
-    console.log(searchHistoryArr);
+    for (var i = 0; i < searchHistoryArr.length; i++) {
+        var searchBtn = document.createElement("button");
+        searchBtn.textContent = "Find bands similar to " + searchHistoryArr[i].artist + " playing in " + searchHistoryArr[i].city;
+        searchHistoryEl.appendChild(searchBtn);
+    }
+
+    console.log("searchHistoryEl", searchHistoryEl);
 }
 
 function saveSearch(artist, city) {
@@ -162,7 +172,7 @@ function saveSearch(artist, city) {
 }
 
 function searchFormHandler() {
-    var searchedArtist = "Red Hot Chili Peppers";
+    var searchedArtist = "Gorillaz";
     var similarArtistsArr = [
         "Red Hot Chili Peppers",
         "Gorillaz",
@@ -172,7 +182,7 @@ function searchFormHandler() {
         "The White Stripes",
         "Incubus"
     ];
-    var searchedCity = "Boston";
+    var searchedCity = "London";
     getShows(similarArtistsArr, searchedCity);
     saveSearch(searchedArtist, searchedCity);
 }
