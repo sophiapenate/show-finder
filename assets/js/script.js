@@ -1,4 +1,4 @@
-var searchHistoryEl = document.createElement("div");
+var searchHistoryEl = document.querySelector("#search-history");
 var searchHistoryArr = [];
 
 function displayShow(showObj) {
@@ -132,7 +132,7 @@ function getSimilarArtists(searchedTerm) {
 
 function displaySearchHistory() {
     // reset searchHistoryEl
-    searchHistoryEl.textContent = "";
+    searchHistoryEl.innerHTML = "";
 
     // pull search history from local storage
     searchHistoryArr = JSON.parse(localStorage.getItem("searchHistory"));
@@ -146,8 +146,19 @@ function displaySearchHistory() {
 
     // loop through searchHistoryArr and create buttons for each item
     for (var i = 0; i < searchHistoryArr.length; i++) {
+        // set artist and city variables
+        var artist = searchHistoryArr[i].artist;
+        var city = searchHistoryArr[i].city;
+
+        // create and setup search button
         var searchBtn = document.createElement("button");
-        searchBtn.textContent = "Find bands similar to " + searchHistoryArr[i].artist + " playing in " + searchHistoryArr[i].city;
+        searchBtn.textContent = "Find bands similar to " + artist + " playing in " + city;
+        searchBtn.setAttribute("data-index", i);
+        searchBtn.setAttribute("data-artist", artist);
+        searchBtn.setAttribute("data-city", city);
+        searchBtn.classList = "button";
+
+        // append search button to DOM
         searchHistoryEl.appendChild(searchBtn);
     }
 
@@ -187,5 +198,23 @@ function searchFormHandler() {
     saveSearch(searchedArtist, searchedCity);
 }
 
+function searchBtnHandler(event) {
+    if (event.target.matches("button")) {
+        // get info from data attributes
+        var index = event.target.getAttribute("data-index");
+        var artist = event.target.getAttribute("data-artist");
+        var city = event.target.getAttribute("data-city");
+
+        // find similar artists
+
+        // move clicked button to top
+        searchHistoryArr.splice(index, 1);
+        saveSearch(artist, city);
+    }
+}
+
 displaySearchHistory();
+
 searchFormHandler();
+
+searchHistoryEl.addEventListener("click", searchBtnHandler);
