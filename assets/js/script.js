@@ -1,3 +1,5 @@
+var searchHistoryArr = [];
+
 function displayShow(showObj) {
     // create concertInfoEl
     var concertInfoEl = document.createElement("div");
@@ -127,8 +129,36 @@ function getSimilarArtists(searchedTerm) {
 	});
 }
 
+function displaySearchHistory() {
+    // pull search history from local storage
+    searchHistoryArr = JSON.parse(localStorage.getItem("searchHistory"));
+    // if no search history exists in local storage
+    if (!searchHistoryArr) {
+        // set searchHistoryArr to empty
+        searchHistoryArr = [];
+        // return out of function
+        return false;
+    }
+
+    // loop through searchHistoryArr and create buttons for each item
+    console.log(searchHistoryArr);
+}
+
 function saveSearch(artist, city) {
-    console.log (artist, city)
+    // create object for searched terms
+    var searchObj = {
+        artist: artist,
+        city: city
+    };
+    
+    // push object to first item in searchHistoryArr
+    searchHistoryArr.unshift(searchObj);
+    
+    // update searchHistory in local storage
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArr));
+
+    // update DOM
+    displaySearchHistory();
 }
 
 function searchFormHandler() {
@@ -147,4 +177,5 @@ function searchFormHandler() {
     saveSearch(searchedArtist, searchedCity);
 }
 
+displaySearchHistory();
 searchFormHandler();
