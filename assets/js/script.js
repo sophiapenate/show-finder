@@ -127,6 +127,10 @@ function getSimilarArtists(searchedTerm) {
 	});
 }
 
+function saveSearch(artist, city) {
+    console.log (artist, city)
+}
+
 function searchFormHandler() {
     var searchedArtist = "Red Hot Chili Peppers";
     var similarArtistsArr = [
@@ -138,8 +142,9 @@ function searchFormHandler() {
         "The White Stripes",
         "Incubus"
     ];
-    var searchedLocation = "Boston";
-    getShows(similarArtistsArr, searchedLocation);
+    var searchedCity = "Boston";
+    getShows(similarArtistsArr, searchedCity);
+    saveSearch(searchedArtist, searchedCity);
 }
 
 searchFormHandler();
