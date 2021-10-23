@@ -2,7 +2,7 @@
 
 ## User Story
 AS AN avid concert-goer<br>
-I WANT to find concerts near me<br>
+I WANT to find concerts near me for bands similar to one I like<br>
 SO THAT I can discover new music at live shows.
 
 ## APIs
