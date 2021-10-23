@@ -34,8 +34,12 @@ function getSimilarArtists(searchedTerm) {
 		return response.json();
 	})
 	.then(function(data) {
-		console.log(data);
         var similarArtistsArr = [];
+        for (let i = 0; i < data.Similar.Results.length; i++) {
+        similarArtistsArr.push(data.Similar.Results[i].Name);
+    }
+
+    
         // write loop to push artist names into similarArtistsArr
 	})
 	.catch(function(err) {
