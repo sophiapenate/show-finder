@@ -37,6 +37,13 @@ function displayShow(showObj) {
     venueEl.textContent = showObj.venue;
     concertInfoEl.appendChild(venueEl);
 
+    // append get tix button to concertInfoEl
+    var getTixBtn = document.createElement("a");
+    getTixBtn.classList = "get-tix-btn";
+    getTixBtn.textContent = "Get Tickets";
+    getTixBtn.setAttribute("href", showObj.getTixURL);
+    concertInfoEl.appendChild(getTixBtn);
+
     // append concertInfoEl to DOM
     console.log(concertInfoEl);
 }
