@@ -1,52 +1,58 @@
 function displayShow(showObj) {
-    //for (var i = 0; i < showsArr.length; i++) {
-        // create concertInfoEl
-        var concertInfoEl = document.createElement("div");
+    // create concertInfoEl
+    var concertInfoEl = document.createElement("div");
 
-        // append artist to concertInfoEl
-        var artistEl = document.createElement("p");
-        artistEl.classList = "artist";
-        artistEl.textContent = showObj.name;
-        concertInfoEl.appendChild(artistEl);
+    // append artist to concertInfoEl
+    var artistEl = document.createElement("p");
+    artistEl.classList = "artist";
+    artistEl.textContent = showObj.artistName;
+    concertInfoEl.appendChild(artistEl);
 
-        // append date to concertInfoEl
-        var dateEl = document.createElement("p");
-        dateEl.classList = "date";
-        // check if multi-day event
-        if (showObj.endDate) {
-            dateEl.textContent = showObj.startDate + " - " + showObj.endDate;
-        } else {
-            dateEl.textContent = showObj.startDate;
-        }
-        concertInfoEl.appendChild(dateEl);
+    // append event name to concertInfoEl
+    var eventNameEl = document.createElement("p");
+    eventNameEl.classList = "event-name";
+    eventNameEl.textContent = showObj.eventName;
+    concertInfoEl.appendChild(eventNameEl);
 
-        // append city to concertInfoEl
-        var cityEl = document.createElement("p");
-        cityEl.classList = "city";
-        cityEl.textContent = showObj.city;
-        concertInfoEl.appendChild(cityEl);
+    // append date to concertInfoEl
+    var dateEl = document.createElement("p");
+    dateEl.classList = "date";
+    // check if multi-day event
+    if (showObj.endDate) {
+        dateEl.textContent = showObj.startDate + " - " + showObj.endDate;
+    } else {
+        dateEl.textContent = showObj.startDate;
+    }
+    concertInfoEl.appendChild(dateEl);
 
-        // append venue to concertInfoEl
-        var venueEl = document.createElement("p");
-        venueEl.classList = "venue";
-        venueEl.textContent = showObj.venue;
-        concertInfoEl.appendChild(venueEl);
+    // append city to concertInfoEl
+    var cityEl = document.createElement("p");
+    cityEl.classList = "city";
+    cityEl.textContent = showObj.city;
+    concertInfoEl.appendChild(cityEl);
 
-        // append concertInfoEl to DOM
-        console.log(concertInfoEl);
-   // }
+    // append venue to concertInfoEl
+    var venueEl = document.createElement("p");
+    venueEl.classList = "venue";
+    venueEl.textContent = showObj.venue;
+    concertInfoEl.appendChild(venueEl);
+
+    // append concertInfoEl to DOM
+    console.log(concertInfoEl);
 }
 
 function getShows(similarArtistsArr, searchedCity) {
-    // set counter to call fetch one at a time
+    // set counters
     i = 0;
+    showsFound = 0;
 
     // setup function to fetch event data
     function fetchEventData() {
         // set timeout to avoid quota limit violation
         setTimeout(function() {
+            var artistName = similarArtistsArr[i];
             var cors_preface = 'https://uofa21cors.herokuapp.com/';
-            var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + similarArtistsArr[i] + "&city=" + searchedCity + "&size=1&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
+            var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + artistName + "&city=" + searchedCity + "&size=1&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
             fetch(cors_preface + apiURL)
                 .then(function (response) {
                     return response.json();
@@ -55,9 +61,13 @@ function getShows(similarArtistsArr, searchedCity) {
                     if (data._embedded) {
                         var fetchedEvents = data._embedded.events;
                         for (var i = 0; i < fetchedEvents.length; i++) {
+                            // update showsFound counter
+                            showsFound++;
+
                             // create object for each show
                             var showObj = {};
-                                showObj.name = fetchedEvents[i].name;
+                                showObj.artistName = artistName;
+                                showObj.eventName = fetchedEvents[i].name;
                                 showObj.startDate = fetchedEvents[i].dates.start.localDate;
                                 // set endDate only if it exists
                                 if (fetchedEvents[i].dates.end) {
@@ -68,15 +78,17 @@ function getShows(similarArtistsArr, searchedCity) {
                                 showObj.getTixURL = fetchedEvents[i].url;
                             // display object to DOM
                             displayShow(showObj);
-                                }
+                        }
                     }
                 })
                 .then(function() {
                     // increase counter
                     i++;
-                    // if more events, fetch
+                    // check if there are more artists to search
                     if (i < similarArtistsArr.length) {
                         fetchEventData();
+                    } else if (showsFound === 0) {
+                        console.log("No shows found.");
                     }
                 })
                 .catch(function (err) {
