@@ -62,6 +62,7 @@ function displayShow(showObj) {
 }
 
 function getShows(similarArtistsArr, searchedCity) {
+    console.log(similarArtistsArr, searchedCity);
     // set counters
     i = 0;
     showsFound = 0;
@@ -113,7 +114,7 @@ function getShows(similarArtistsArr, searchedCity) {
                     }
                 })
                 .catch(function (err) {
-                    console.log("Whoops. Something went wrong.", err);
+                    console.log(err);
                 })
         }, 200);
     }
@@ -122,9 +123,9 @@ function getShows(similarArtistsArr, searchedCity) {
     fetchEventData();
 }
 
-function getSimilarArtists(searchedTerm) {
+function getSimilarArtists(searchedArtist, searchedCity) {
 	var cors_preface = 'https://uofa21cors.herokuapp.com/';
-	var apiURL = "https://tastedive.com/api/similar?q=" + searchedTerm + "&k=425855-ShowFind-GMZOGDQD"
+	var apiURL = "https://tastedive.com/api/similar?q=" + searchedArtist + "&k=425855-ShowFind-GMZOGDQD"
 	fetch(cors_preface + apiURL)
 	.then(function(response) {
 		return response.json();
@@ -134,6 +135,14 @@ function getSimilarArtists(searchedTerm) {
         for (let i = 0; i < data.Similar.Results.length; i++) {
             similarArtistsArr.push(data.Similar.Results[i].Name);
         }
+
+        // check if similar artists found
+        if (similarArtistsArr.length === 0) {
+            showListEl.textContent = "Sorry, nothing found. Try searching for a different artist.";
+            return;
+        }
+        
+        getShows(similarArtistsArr, searchedCity);
 	})
 	.catch(function(err) {
 		console.error(err);
@@ -171,8 +180,6 @@ function displaySearchHistory() {
         // append search button to DOM
         searchHistoryEl.appendChild(searchBtn);
     }
-
-    console.log("searchHistoryEl", searchHistoryEl);
 }
 
 function saveSearch(artist, city) {
@@ -200,18 +207,12 @@ function searchFormHandler(event) {
 
     // clear show list
     showListEl.innerHTML = "";
+
+    // get user inputs
     var searchedArtist = bandInputEl.value.trim();
-    var similarArtistsArr = [
-        "Red Hot Chili Peppers",
-        "Gorillaz",
-        "Nirvana",
-        "Foo Fighters",
-        "Rage Against the Machine",
-        "The White Stripes",
-        "Incubus"
-    ];
     var searchedCity = cityInputEl.value.trim();
-    getShows(similarArtistsArr, searchedCity);
+
+    getSimilarArtists(searchedArtist, searchedCity);
     saveSearch(searchedArtist, searchedCity);
 }
 
