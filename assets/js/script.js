@@ -13,7 +13,7 @@ function displayShow(showObj) {
     showWrapEl.appendChild(showInfoEl);
 
         // append artist to showInfoEl
-        var artistEl = document.createElement("p");
+        var artistEl = document.createElement("h5");
         artistEl.classList = "artist";
         artistEl.textContent = showObj.artistName;
         showInfoEl.appendChild(artistEl);
@@ -35,16 +35,10 @@ function displayShow(showObj) {
         }
         showInfoEl.appendChild(dateEl);
 
-        // append city to showInfoEl
-        var cityEl = document.createElement("p");
-        cityEl.classList = "city";
-        cityEl.textContent = showObj.city;
-        showInfoEl.appendChild(cityEl);
-
-        // append venue to showInfoEl
+        // append venue and city to showInfoEl
         var venueEl = document.createElement("p");
         venueEl.classList = "venue";
-        venueEl.textContent = showObj.venue;
+        venueEl.textContent = showObj.venue + ", " + showObj.city;
         showInfoEl.appendChild(venueEl);
     
     // create showTixEl and append to showWrapEl
@@ -75,7 +69,10 @@ function getShows(similarArtistsArr, searchedCity) {
             var artistName = similarArtistsArr[i];
             var cors_preface = 'https://uofa21cors.herokuapp.com/';
             var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + artistName + "&city=" + searchedCity + "&size=1&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
-            //var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + artistName + "&city=" + searchedCity + "&size=1";
+            
+            // let user know search is processing
+            showListEl.textContent = "Searching...";
+
             fetch(cors_preface + apiURL)
                 .then(function (response) {
                     return response.json();
@@ -111,7 +108,7 @@ function getShows(similarArtistsArr, searchedCity) {
                     if (i < similarArtistsArr.length) {
                         fetchEventData();
                     } else if (showsFound === 0) {
-                        console.log("No shows found.");
+                        showListEl.textContent = "No shows found. Try a searching a different band or city.";
                     }
                 })
                 .catch(function (err) {
@@ -186,6 +183,9 @@ function saveSearch(artist, city) {
     
     // push object to first item in searchHistoryArr
     searchHistoryArr.unshift(searchObj);
+
+    // trim array so it holds a max of 5 items
+    searchHistoryArr.splice(5);
     
     // update searchHistory in local storage
     localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArr));
@@ -205,7 +205,7 @@ function searchFormHandler() {
         "The White Stripes",
         "Incubus"
     ];
-    var searchedCity = "London";
+    var searchedCity = "Providence";
     getShows(similarArtistsArr, searchedCity);
     saveSearch(searchedArtist, searchedCity);
 }
