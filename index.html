@@ -30,15 +30,17 @@
     </div>
     <div class="grid-x grid-padding-x">
       <div class="large-3 medium-3 cell">
-        <div class="primary callout">
-          <div class="large-4 medium-4 cell">
-            <label>Input Band</label>
-            <input type="text" placeholder="Search a band" />
-            <label>Input City</label>
-            <input type="text" placeholder="Search a city" />
+        <form id="search-form">
+          <div class="primary callout">
+            <div class="large-4 medium-4 cell">
+              <label>Input Band</label>
+              <input id="band-input" type="text" placeholder="Search a band" />
+              <label>Input City</label>
+              <input id="city-input" type="text" placeholder="Search a city" />
+            </div>
+            <input type="submit" class="button" value="Search">
           </div>
-          <p class="button">Enter<br />
-        </div>
+        </form>
         <div class="primary callout">
           <div class="large-4 medium-4 cell">
             <h4>Recent Searches</h4>

@@ -1,6 +1,10 @@
+var searchFormEl = document.querySelector("#search-form");
+var bandInputEl = document.querySelector("#band-input");
+var cityInputEl = document.querySelector("#city-input");
 var showListEl = document.querySelector("#show-list");
 var searchHistoryEl = document.querySelector("#search-history");
 var searchHistoryArr = [];
+var searchStatusEl = document.querySelector("#search-status");
 
 function displayShow(showObj) {
     // create showWrapEl
@@ -69,9 +73,6 @@ function getShows(similarArtistsArr, searchedCity) {
             var artistName = similarArtistsArr[i];
             var cors_preface = 'https://uofa21cors.herokuapp.com/';
             var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + artistName + "&city=" + searchedCity + "&size=1&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
-            
-            // let user know search is processing
-            showListEl.textContent = "Searching...";
 
             fetch(cors_preface + apiURL)
                 .then(function (response) {
@@ -194,8 +195,12 @@ function saveSearch(artist, city) {
     displaySearchHistory();
 }
 
-function searchFormHandler() {
-    var searchedArtist = "Gorillaz";
+function searchFormHandler(event) {
+    event.preventDefault();
+
+    // clear show list
+    showListEl.innerHTML = "";
+    var searchedArtist = bandInputEl.value.trim();
     var similarArtistsArr = [
         "Red Hot Chili Peppers",
         "Gorillaz",
@@ -205,7 +210,7 @@ function searchFormHandler() {
         "The White Stripes",
         "Incubus"
     ];
-    var searchedCity = "Providence";
+    var searchedCity = cityInputEl.value.trim();
     getShows(similarArtistsArr, searchedCity);
     saveSearch(searchedArtist, searchedCity);
 }
@@ -227,6 +232,6 @@ function searchBtnHandler(event) {
 
 displaySearchHistory();
 
-searchFormHandler();
+searchFormEl.addEventListener("submit", searchFormHandler);
 
 searchHistoryEl.addEventListener("click", searchBtnHandler);
