@@ -141,7 +141,10 @@ function getSimilarArtists(searchedArtist, searchedCity) {
             showListEl.textContent = "Sorry, nothing found. Try searching for a different artist.";
             return;
         }
-        
+
+        // clear show list
+        showListEl.innerHTML = "";
+        // get shows
         getShows(similarArtistsArr, searchedCity);
 	})
 	.catch(function(err) {
@@ -205,9 +208,6 @@ function saveSearch(artist, city) {
 function searchFormHandler(event) {
     event.preventDefault();
 
-    // clear show list
-    showListEl.innerHTML = "";
-
     // get user inputs
     var searchedArtist = bandInputEl.value.trim();
     var searchedCity = cityInputEl.value.trim();
@@ -224,6 +224,7 @@ function searchBtnHandler(event) {
         var city = event.target.getAttribute("data-city");
 
         // find similar artists
+        getSimilarArtists(artist, city);
 
         // move clicked button to top
         searchHistoryArr.splice(index, 1);
