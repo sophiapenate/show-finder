@@ -1,3 +1,6 @@
+var searchHistoryEl = document.querySelector("#search-history");
+var searchHistoryArr = [];
+
 function displayShow(showObj) {
     // create concertInfoEl
     var concertInfoEl = document.createElement("div");
@@ -60,6 +63,7 @@ function getShows(similarArtistsArr, searchedCity) {
             var artistName = similarArtistsArr[i];
             var cors_preface = 'https://uofa21cors.herokuapp.com/';
             var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + artistName + "&city=" + searchedCity + "&size=1&apikey=8nw8dGeQMSK25Lgn95Z3tuN9wAFfccB3";
+            //var apiURL = "https://app.ticketmaster.com/discovery/v2/events.json?keyword=" + artistName + "&city=" + searchedCity + "&size=1";
             fetch(cors_preface + apiURL)
                 .then(function (response) {
                     return response.json();
@@ -99,7 +103,7 @@ function getShows(similarArtistsArr, searchedCity) {
                     }
                 })
                 .catch(function (err) {
-                    console.log(err);
+                    console.log("Whoops. Something went wrong.", err);
                 })
         }, 200);
     }
@@ -109,7 +113,6 @@ function getShows(similarArtistsArr, searchedCity) {
 }
 
 function getSimilarArtists(searchedTerm) {
-
 	var cors_preface = 'https://uofa21cors.herokuapp.com/';
 	var apiURL = "https://tastedive.com/api/similar?q=" + searchedTerm + "&k=425855-ShowFind-GMZOGDQD"
 	fetch(cors_preface + apiURL)
@@ -119,20 +122,68 @@ function getSimilarArtists(searchedTerm) {
 	.then(function(data) {
         var similarArtistsArr = [];
         for (let i = 0; i < data.Similar.Results.length; i++) {
-        similarArtistsArr.push(data.Similar.Results[i].Name);
-    }
-
-    
-        // write loop to push artist names into similarArtistsArr
+            similarArtistsArr.push(data.Similar.Results[i].Name);
+        }
 	})
 	.catch(function(err) {
 		console.error(err);
 	});
+}
 
+function displaySearchHistory() {
+    // reset searchHistoryEl
+    searchHistoryEl.innerHTML = "";
+
+    // pull search history from local storage
+    searchHistoryArr = JSON.parse(localStorage.getItem("searchHistory"));
+    // if no search history exists in local storage
+    if (!searchHistoryArr) {
+        // set searchHistoryArr to empty
+        searchHistoryArr = [];
+        // return out of function
+        return false;
+    }
+
+    // loop through searchHistoryArr and create buttons for each item
+    for (var i = 0; i < searchHistoryArr.length; i++) {
+        // set artist and city variables
+        var artist = searchHistoryArr[i].artist;
+        var city = searchHistoryArr[i].city;
+
+        // create and setup search button
+        var searchBtn = document.createElement("button");
+        searchBtn.textContent = "Find bands similar to " + artist + " playing in " + city;
+        searchBtn.setAttribute("data-index", i);
+        searchBtn.setAttribute("data-artist", artist);
+        searchBtn.setAttribute("data-city", city);
+        searchBtn.classList = "button";
+
+        // append search button to DOM
+        searchHistoryEl.appendChild(searchBtn);
+    }
+
+    console.log("searchHistoryEl", searchHistoryEl);
+}
+
+function saveSearch(artist, city) {
+    // create object for searched terms
+    var searchObj = {
+        artist: artist,
+        city: city
+    };
+    
+    // push object to first item in searchHistoryArr
+    searchHistoryArr.unshift(searchObj);
+    
+    // update searchHistory in local storage
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArr));
+
+    // update DOM
+    displaySearchHistory();
 }
 
 function searchFormHandler() {
-    var searchedArtist = "Red Hot Chili Peppers";
+    var searchedArtist = "Gorillaz";
     var similarArtistsArr = [
         "Red Hot Chili Peppers",
         "Gorillaz",
@@ -142,8 +193,28 @@ function searchFormHandler() {
         "The White Stripes",
         "Incubus"
     ];
-    var searchedLocation = "Boston";
-    getShows(similarArtistsArr, searchedLocation);
+    var searchedCity = "London";
+    getShows(similarArtistsArr, searchedCity);
+    saveSearch(searchedArtist, searchedCity);
 }
 
+function searchBtnHandler(event) {
+    if (event.target.matches("button")) {
+        // get info from data attributes
+        var index = event.target.getAttribute("data-index");
+        var artist = event.target.getAttribute("data-artist");
+        var city = event.target.getAttribute("data-city");
+
+        // find similar artists
+
+        // move clicked button to top
+        searchHistoryArr.splice(index, 1);
+        saveSearch(artist, city);
+    }
+}
+
+displaySearchHistory();
+
 searchFormHandler();
+
+searchHistoryEl.addEventListener("click", searchBtnHandler);
