@@ -1,54 +1,66 @@
+var showListEl = document.querySelector("#show-list");
 var searchHistoryEl = document.querySelector("#search-history");
 var searchHistoryArr = [];
 
 function displayShow(showObj) {
-    // create concertInfoEl
-    var concertInfoEl = document.createElement("div");
+    // create showWrapEl
+    var showWrapEl = document.createElement("div");
+    showWrapEl.classList = "primary callout grid-x";
 
-    // append artist to concertInfoEl
-    var artistEl = document.createElement("p");
-    artistEl.classList = "artist";
-    artistEl.textContent = showObj.artistName;
-    concertInfoEl.appendChild(artistEl);
+    // create showInfoEl and append to showWrapEl
+    var showInfoEl = document.createElement("div");
+    showInfoEl.classList = "large-10 medium-10 small-10 cell";
+    showWrapEl.appendChild(showInfoEl);
 
-    // append event name to concertInfoEl
-    var eventNameEl = document.createElement("p");
-    eventNameEl.classList = "event-name";
-    eventNameEl.textContent = showObj.eventName;
-    concertInfoEl.appendChild(eventNameEl);
+        // append artist to showInfoEl
+        var artistEl = document.createElement("p");
+        artistEl.classList = "artist";
+        artistEl.textContent = showObj.artistName;
+        showInfoEl.appendChild(artistEl);
 
-    // append date to concertInfoEl
-    var dateEl = document.createElement("p");
-    dateEl.classList = "date";
-    // check if multi-day event
-    if (showObj.endDate) {
-        dateEl.textContent = showObj.startDate + " - " + showObj.endDate;
-    } else {
-        dateEl.textContent = showObj.startDate;
-    }
-    concertInfoEl.appendChild(dateEl);
+        // append event name to showInfoEl
+        var eventNameEl = document.createElement("p");
+        eventNameEl.classList = "event-name";
+        eventNameEl.textContent = showObj.eventName;
+        showInfoEl.appendChild(eventNameEl);
 
-    // append city to concertInfoEl
-    var cityEl = document.createElement("p");
-    cityEl.classList = "city";
-    cityEl.textContent = showObj.city;
-    concertInfoEl.appendChild(cityEl);
+        // append date to showInfoEl
+        var dateEl = document.createElement("p");
+        dateEl.classList = "date";
+        // check if multi-day event
+        if (showObj.endDate) {
+            dateEl.textContent = showObj.startDate + " - " + showObj.endDate;
+        } else {
+            dateEl.textContent = showObj.startDate;
+        }
+        showInfoEl.appendChild(dateEl);
 
-    // append venue to concertInfoEl
-    var venueEl = document.createElement("p");
-    venueEl.classList = "venue";
-    venueEl.textContent = showObj.venue;
-    concertInfoEl.appendChild(venueEl);
+        // append city to showInfoEl
+        var cityEl = document.createElement("p");
+        cityEl.classList = "city";
+        cityEl.textContent = showObj.city;
+        showInfoEl.appendChild(cityEl);
 
-    // append get tix button to concertInfoEl
-    var getTixBtn = document.createElement("a");
-    getTixBtn.classList = "get-tix-btn";
-    getTixBtn.textContent = "Get Tickets";
-    getTixBtn.setAttribute("href", showObj.getTixURL);
-    concertInfoEl.appendChild(getTixBtn);
+        // append venue to showInfoEl
+        var venueEl = document.createElement("p");
+        venueEl.classList = "venue";
+        venueEl.textContent = showObj.venue;
+        showInfoEl.appendChild(venueEl);
+    
+    // create showTixEl and append to showWrapEl
+    var showTixEl = document.createElement("div");
+    showTixEl.classList = "large-2 medium-2 small-2 cell";
+    showWrapEl.appendChild(showTixEl);
 
-    // append concertInfoEl to DOM
-    console.log(concertInfoEl);
+        // append get tix button to showInfoEl
+        var getTixBtn = document.createElement("a");
+        getTixBtn.classList = "get-tix-btn button";
+        getTixBtn.textContent = "Get Tickets";
+        getTixBtn.setAttribute("href", showObj.getTixURL);
+        showTixEl.appendChild(getTixBtn);
+
+    // append showInfoEl to DOM
+    showListEl.appendChild(showWrapEl);
 }
 
 function getShows(similarArtistsArr, searchedCity) {
