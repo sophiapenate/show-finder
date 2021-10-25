@@ -4,9 +4,12 @@ var cityInputEl = document.querySelector("#city-input");
 var showListEl = document.querySelector("#show-list");
 var searchHistoryEl = document.querySelector("#search-history");
 var searchHistoryArr = [];
-var searchStatusEl = document.querySelector("#search-status");
+var statusEl = document.createElement("div");
 
 function displayShow(showObj) {
+    // hide status
+    statusEl.remove();
+
     // create showWrapEl
     var showWrapEl = document.createElement("div");
     showWrapEl.classList = "primary callout grid-x";
@@ -55,14 +58,20 @@ function displayShow(showObj) {
         getTixBtn.classList = "get-tix-btn button";
         getTixBtn.textContent = "Get Tickets";
         getTixBtn.setAttribute("href", showObj.getTixURL);
+        getTixBtn.setAttribute("target", "_blank");
         showTixEl.appendChild(getTixBtn);
 
     // append showInfoEl to DOM
     showListEl.appendChild(showWrapEl);
 }
 
+function displayStatus(message, status) {
+    statusEl.classList = status + " callout grid-x";
+    statusEl.textContent = message;
+    showListEl.appendChild(statusEl);
+}
+
 function getShows(similarArtistsArr, searchedCity) {
-    console.log(similarArtistsArr, searchedCity);
     // set counters
     i = 0;
     showsFound = 0;
@@ -88,15 +97,15 @@ function getShows(similarArtistsArr, searchedCity) {
 
                             // create object for each show
                             var showObj = {};
-                                showObj.artistName = artistName;
-                                showObj.eventName = fetchedEvents[i].name;
+                                showObj.artistName = artistName.trim();
+                                showObj.eventName = fetchedEvents[i].name.trim();
                                 showObj.startDate = moment(fetchedEvents[i].dates.start.localDate).format("ddd, MMM D, YYYY");
                                 // set endDate only if it exists
                                 if (fetchedEvents[i].dates.end) {
                                     showObj.endDate = moment(fetchedEvents[i].dates.end.localDate).format("ddd, MMM D, YYYY");
                                 }
-                                showObj.city = fetchedEvents[i]._embedded.venues[0].city.name,
-                                showObj.venue = fetchedEvents[i]._embedded.venues[0].name,
+                                showObj.city = fetchedEvents[i]._embedded.venues[0].city.name.trim(),
+                                showObj.venue = fetchedEvents[i]._embedded.venues[0].name.trim(),
                                 showObj.getTixURL = fetchedEvents[i].url;
                             // display object to DOM
                             displayShow(showObj);
@@ -108,9 +117,13 @@ function getShows(similarArtistsArr, searchedCity) {
                     i++;
                     // check if there are more artists to search
                     if (i < similarArtistsArr.length) {
+                        displayStatus("Searching...", "primary");
                         fetchEventData();
                     } else if (showsFound === 0) {
-                        showListEl.textContent = "No shows found. Try a searching a different band or city.";
+                        displayStatus("No shows found. Try a searching a different band or city.", "warning");
+                    } else {
+                        // hide status
+                        statusEl.remove();
                     }
                 })
                 .catch(function (err) {
@@ -124,6 +137,11 @@ function getShows(similarArtistsArr, searchedCity) {
 }
 
 function getSimilarArtists(searchedArtist, searchedCity) {
+    // clear show list
+    showListEl.innerHTML = "";
+    // display status to user
+    displayStatus("Searching...", "primary");
+
 	var cors_preface = 'https://uofa21cors.herokuapp.com/';
 	var apiURL = "https://tastedive.com/api/similar?q=" + searchedArtist + "&k=425855-ShowFind-GMZOGDQD"
 	fetch(cors_preface + apiURL)
@@ -138,12 +156,10 @@ function getSimilarArtists(searchedArtist, searchedCity) {
 
         // check if similar artists found
         if (similarArtistsArr.length === 0) {
-            showListEl.textContent = "Sorry, nothing found. Try searching for a different artist.";
+            displayStatus("Sorry, nothing found. Try searching for a different artist.", "warning");
             return;
         }
 
-        // clear show list
-        showListEl.innerHTML = "";
         // get shows
         getShows(similarArtistsArr, searchedCity);
 	})
@@ -218,6 +234,10 @@ function searchFormHandler(event) {
 
 function searchBtnHandler(event) {
     if (event.target.matches("button")) {
+        // clear form
+        bandInputEl.value = "";
+        cityInputEl.value = "";
+
         // get info from data attributes
         var index = event.target.getAttribute("data-index");
         var artist = event.target.getAttribute("data-artist");
