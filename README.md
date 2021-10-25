@@ -1,8 +1,8 @@
 # Show Finder
 
 ## User Story
-AS AN avid concert-goer
-I WANT to find concerts near me
+AS AN avid concert-goer<br>
+I WANT to find concerts near me for bands similar to one I like<br>
 SO THAT I can discover new music at live shows.
 
 ## APIs
@@ -13,6 +13,6 @@ SO THAT I can discover new music at live shows.
 * [Foundation](https://get.foundation/sites/docs/)
 
 ## Contributers
-[Sandy Sanders](https://github.com/sandy-06)
-[Shad Pike](https://github.com/huf0)
-[Sophia Barrett](https://github.com/sophiabarrett)
+* [Sandy Sanders](https://github.com/sandy-06)
+* [Shad Pike](https://github.com/huf0)
+* [Sophia Barrett](https://github.com/sophiabarrett)

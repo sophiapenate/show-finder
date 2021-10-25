@@ -1,0 +1,63 @@
+
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Show Finder</title>
+  <link rel="stylesheet" href="assets/css/foundation.css">
+</head>
+
+<body>
+
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <div class="large-12 cell">
+        <h1>Welcome to Show Finder</h1>
+        <h3>The One Stop Site to find New Bands and Get Tickets to their Shows</h3>
+      </div>
+    </div>
+  
+
+    <div class="grid-x grid-padding-x">
+      <div class="large-12 cell">
+        <div class="primary callout">
+          <p>Input a band and we will find one similar and where they are playing.</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid-x grid-padding-x">
+      <div class="large-3 medium-3 cell">
+        <form id="search-form">
+          <div class="primary callout">
+            <div class="large-4 medium-4 cell">
+              <label>Input Band or Artist</label>
+              <input id="band-input" type="text" placeholder="Search a band" />
+              <label>Input City</label>
+              <input id="city-input" type="text" placeholder="Search a city" />
+            </div>
+            <input type="submit" class="button" value="Search">
+          </div>
+        </form>
+        <div class="primary callout">
+          <div class="large-4 medium-4 cell">
+            <h4>Recent Searches</h4>
+            <div id="search-history">
+              <!-- Search History Buttons Go Here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="show-list" class="large-9 medium-9 cell">
+        <!-- Shows Go Here -->
+      </div>
+    </div>
+  </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
