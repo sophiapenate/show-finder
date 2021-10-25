@@ -66,14 +66,12 @@ function displayShow(showObj) {
 }
 
 function displayStatus(message, status) {
-    console.log(message, status);
     statusEl.classList = status + " callout grid-x";
     statusEl.textContent = message;
     showListEl.appendChild(statusEl);
 }
 
 function getShows(similarArtistsArr, searchedCity) {
-    console.log(similarArtistsArr, searchedCity);
     // set counters
     i = 0;
     showsFound = 0;
