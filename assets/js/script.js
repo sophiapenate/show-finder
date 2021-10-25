@@ -48,7 +48,7 @@ function displayShow(showObj) {
     concertInfoEl.appendChild(getTixBtn);
 
     // append concertInfoEl to DOM
-    console.log(concertInfoEl);
+   // console.log(concertInfoEl);
 }
 
 function getShows(similarArtistsArr, searchedCity) {
@@ -130,39 +130,39 @@ function getSimilarArtists(searchedTerm) {
 	});
 }
 
-function displaySearchHistory() {
+//function displaySearchHistory
     // reset searchHistoryEl
-    searchHistoryEl.innerHTML = "";
+  //  searchHistoryEl.innerHTML = "";
 
     // pull search history from local storage
-    searchHistoryArr = JSON.parse(localStorage.getItem("searchHistory"));
+   // searchHistoryArr = JSON.parse(localStorage.getItem("searchHistory"));
     // if no search history exists in local storage
-    if (!searchHistoryArr) {
+    //if (!searchHistoryArr) {
         // set searchHistoryArr to empty
-        searchHistoryArr = [];
+       // searchHistoryArr = [];
         // return out of function
-        return false;
-    }
+       // return false;
+  //  }
 
     // loop through searchHistoryArr and create buttons for each item
-    for (var i = 0; i < searchHistoryArr.length; i++) {
+  ////  for (var i = 0; i < searchHistoryArr.length; i++) {
         // set artist and city variables
-        var artist = searchHistoryArr[i].artist;
-        var city = searchHistoryArr[i].city;
+       // var artist = searchHistoryArr[i].artist;
+      //  var city = searchHistoryArr[i].city;
 
         // create and setup search button
-        var searchBtn = document.createElement("button");
-        searchBtn.textContent = "Find bands similar to " + artist + " playing in " + city;
-        searchBtn.setAttribute("data-index", i);
-        searchBtn.setAttribute("data-artist", artist);
-        searchBtn.setAttribute("data-city", city);
-        searchBtn.classList = "button";
+       // var searchBtn = document.createElement("button");
+      //  searchBtn.textContent = "Find bands similar to " + artist + " playing in " + city;
+        //searchBtn.setAttribute("data-index", i);
+       // searchBtn.setAttribute("data-artist", artist);
+       // searchBtn.setAttribute("data-city", city);
+      //  searchBtn.classList = "button";
 
         // append search button to DOM
-        searchHistoryEl.appendChild(searchBtn);
-    }
+      //  searchHistoryEl.appendChild(searchBtn);
+  //  }
 
-    console.log("searchHistoryEl", searchHistoryEl);
+  //  console.log("searchHistoryEl", searchHistoryEl);//
 }
 
 function saveSearch(artist, city) {
@@ -179,7 +179,7 @@ function saveSearch(artist, city) {
     localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArr));
 
     // update DOM
-    displaySearchHistory();
+   // displaySearchHistory();
 }
 
 function searchFormHandler() {
@@ -213,7 +213,7 @@ function searchBtnHandler(event) {
     }
 }
 
-displaySearchHistory();
+//displaySearchHistory();
 
 searchFormHandler();
 
