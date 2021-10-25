@@ -234,6 +234,10 @@ function searchFormHandler(event) {
 
 function searchBtnHandler(event) {
     if (event.target.matches("button")) {
+        // clear form
+        bandInputEl.value = "";
+        cityInputEl.value = "";
+
         // get info from data attributes
         var index = event.target.getAttribute("data-index");
         var artist = event.target.getAttribute("data-artist");
