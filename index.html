@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -20,6 +21,7 @@
         <h3>The One Stop Site to find New Bands and Get Tickets to their Shows</h3>
       </div>
     </div>
+  
 
     <div class="grid-x grid-padding-x">
       <div class="large-12 cell">
@@ -30,42 +32,39 @@
     </div>
     <div class="grid-x grid-padding-x">
       <div class="large-3 medium-3 cell">
-        <form>
+        <form id="search-form">
           <div class="primary callout">
             <div class="large-4 medium-4 cell">
-              <label>Input Band</label>
-              <input type="text" placeholder="large-4.cell" />
+              <label>Input Band or Artist</label>
+              <input id="band-input" type="text" placeholder="Search a band" />
               <label>Input City</label>
-              <input type="text" placeholder="large-4.cell" />
+              <input id="city-input" type="text" placeholder="Search a city" />
             </div>
-            <p class="button">Enter<br />
+            <input type="submit" class="button" value="Search">
           </div>
         </form>
-      </div>
-     
 
-      <div class="large-8 medium-5 cell">
         <div class="primary callout">
-          <div class="grid-x grid-padding-x">
-            <div class="large-9 medium-4 small-4 cell">
-              <div class="primary callout">
-              </div>
-            </div>
-            <div class="large-2 medium-2 small-2 cell">
-              <div class="primary callout">
-              </div>
+          <div class="large-4 medium-4 cell">
+            <h4>Recent Searches</h4>
+            <div id="search-history">
+              <!-- Search History Buttons Go Here -->
             </div>
           </div>
         </div>
       </div>
 
-      <footer>
-        <div class=footer>
-          <h4>Contributors:Sophie Barton, Sandra Sanders, Shad Pike</h4>
+\          <h4>Contributors:Sophie Barton, Sandra Sanders, Shad Pike</h4>
 
         </div>
 
       </footer>
+      <div id="show-list" class="large-9 medium-9 cell">
+        <!-- Shows Go Here -->
+      </div>
+    </div>
+  </div>
+
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
