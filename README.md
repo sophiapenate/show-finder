@@ -12,7 +12,7 @@ SO THAT I can discover new music at live shows.
 ## CSS Framework
 * [Foundation](https://get.foundation/sites/docs/)
 
-## Contributers
+## Contributors
 * [Sandy Sanders](https://github.com/sandy-06)
 * [Shad Pike](https://github.com/huf0)
 * [Sophia Barrett](https://github.com/sophiabarrett)
