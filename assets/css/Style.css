@@ -16,5 +16,7 @@ footer {
     color:ghostwhite;
     width:auto;
     height: 100px;
-text-indent: 10px;
+    text-indent: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
