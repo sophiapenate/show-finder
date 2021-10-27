@@ -2,19 +2,25 @@
 
 
 #title {
-     background-color:14, 9, 44;
-     color:ghostwhite;
+     background-color:darkblue;
+     background-image: url("../images/Screenshot.png") ;
+     background-size: contain;
+     color:snow;
 
 }
 
 
 
 
-footer {
+.footer {
 
-    background-color:rgb(14, 9, 44) ;
+    background-color:rgb(6, 4, 20) ;
     color:ghostwhite;
     width:auto;
     height: 100px;
-text-indent: 10px;
+    text-indent: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-image: url("../images/Screenshot.png") ;
+     background-size: contain;
 }
