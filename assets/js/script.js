@@ -16,7 +16,7 @@ function displayShow(showObj) {
 
     // create showInfoEl and append to showWrapEl
     var showInfoEl = document.createElement("div");
-    showInfoEl.classList = "large-10 medium-10 small-10 cell";
+    showInfoEl.classList = "large-10 medium-10 small-12 cell";
     showWrapEl.appendChild(showInfoEl);
 
         // append artist to showInfoEl
@@ -50,7 +50,7 @@ function displayShow(showObj) {
     
     // create showTixEl and append to showWrapEl
     var showTixEl = document.createElement("div");
-    showTixEl.classList = "large-2 medium-2 small-2 cell";
+    showTixEl.classList = "large-2 medium-2 small-12 cell";
     showWrapEl.appendChild(showTixEl);
 
         // append get tix button to showInfoEl
