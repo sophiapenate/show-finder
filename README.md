@@ -19,7 +19,7 @@ HTML/CSS and JAVASCRIPT
 * [Ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/)
 
 
-## Contributers
+## Contributors
 * [Sandy Sanders](https://github.com/sandy-06)
 * [Shad Pike](https://github.com/huf0)
 * [Sophia Barrett](https://github.com/sophiabarrett)
