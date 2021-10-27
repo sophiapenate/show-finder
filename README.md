@@ -27,4 +27,6 @@ HTML/CSS and JAVASCRIPT
 ## Deployed Website
 https://sophiabarrett.github.io/show-finder/
 
-## Image
+## Images
+![image (1)](https://user-images.githubusercontent.com/87563266/139150057-a7a5d36b-be17-4416-b8bd-74d7928bc88e.png)
+![image (2)](https://user-images.githubusercontent.com/87563266/139150075-1d2d675a-fbaf-4295-b016-afa93f616dc6.png)
