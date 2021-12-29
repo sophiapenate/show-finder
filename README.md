@@ -1,15 +1,17 @@
 # Show Finder
 
 ## Description
-A easy way to find concerts around you from bands you like or, similar artists!
+An easy way to find concerts around you for artists similar to those you love!
 
 ## User Story
 AS AN avid concert-goer<br>
-I WANT to find concerts near me for bands similar to one I like<br>
+I WANT to find concerts near me for artists similar to one I like<br>
 SO THAT I can discover new music at live shows.
 
 ## Languages Used
-HTML/CSS and JAVASCRIPT
+* HTML
+* CSS
+* JavaScript
 
 ## CSS Framework
 * [Foundation](https://get.foundation/sites/docs/)
@@ -17,7 +19,6 @@ HTML/CSS and JAVASCRIPT
 ## APIs
 * [TasteDive](https://tastedive.com/read/api)
 * [Ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/)
-
 
 ## Contributors
 * [Sandy Sanders](https://github.com/sandy-06)
